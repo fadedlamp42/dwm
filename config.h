@@ -30,10 +30,11 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title       tags mask     isfloating   monitor */
-	//{ "Gimp",     NULL,       NULL,       0,            1,           -1 },
-	{ "Discord",  NULL,       NULL,       1 << 3,       0,           -1 },
-	{ NULL,       NULL,   "scratchpad",   0,            1,           -1,       's' },
+	/* class      instance    title                         tags mask   isfloating   monitor */
+	//{ "Gimp",     NULL,       NULL,                       0,          1,           -1 },
+	{ NULL,       NULL,       "Discord",                    1 << 3,     0,           -1 },
+	{ NULL,       NULL,       "scratchpad",                 0,          1,           -1,       's' },
+	{ NULL,       NULL,       "Settings",                   0,          1,           -1},
 };
 
 /* layout(s) */
@@ -65,6 +66,8 @@ static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont,
 static const char *termcmd[]  = { "st", NULL };
 static const char *webcmd[]  = { "firefox", NULL };
 static const char *msgcmd[]  = { "discord", NULL };
+static const char *zoomcmd[]  = { "zoom", NULL };
+static const char *gcpcmd[]  = { "gcp", NULL };
 
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", "-g", "100x30+100+100", "-f", "Monospace:14", "-e", "/bin/bash", "--init-file", "/home/regular/code/src/shell/scratch_init.sh", NULL};
@@ -75,6 +78,8 @@ static Key keys[] = {
 	{ MODKEY,                       XK_Return,     spawn,          {.v = termcmd } },
 	{ MODKEY,                       XK_w,          spawn,          {.v = webcmd } },
 	{ MODKEY,                       XK_s,          spawn,          {.v = msgcmd } },
+	{ MODKEY,                       XK_z,          spawn,          {.v = zoomcmd } },
+	{ MODKEY,                       XK_g,          spawn,          {.v = gcpcmd } },
 	{ MODKEY,                       XK_grave,      togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY,                       XK_b,          togglebar,      {0} },
 	{ MODKEY,                       XK_j,          focusstack,     {.i = +1 } },
@@ -84,7 +89,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_h,          setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,          setmfact,       {.f = +0.05} },
 	{ MODKEY|ShiftMask,             XK_Return,     zoom,           {0} },
-	{ MODKEY,                       XK_Tab,        view,           {0} },
+// { MODKEY,                       XK_Tab,        view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,          killclient,     {0} },
 	{ MODKEY,                       XK_t,          setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,          setlayout,      {.v = &layouts[1]} },
@@ -100,9 +105,9 @@ static Key keys[] = {
     { MODKEY,                       XK_Up,         spawn,          {.v = upvol   } },
 	{ MODKEY,                       XK_Down,       spawn,          {.v = downvol } },
 	{ MODKEY,                       XK_KP_Insert,  spawn,          {.v = mutevol } },
-	{ MODKEY,                       XK_minus,  setgaps,        {.i = -1 } },
-	{ MODKEY,                       XK_equal,  setgaps,        {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_equal,  setgaps,        {.i = 0  } },
+	{ MODKEY,                       XK_minus,      setgaps,        {.i = -15 } },
+	{ MODKEY,                       XK_equal,      setgaps,        {.i = +15 } },
+	{ MODKEY|ShiftMask,             XK_equal,      setgaps,        {.i = 0  } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
