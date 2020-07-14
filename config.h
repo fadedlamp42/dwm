@@ -35,6 +35,8 @@ static const Rule rules[] = {
 	{ NULL,       NULL,       "Discord",                    1 << 3,     0,           -1 },
 	{ NULL,       NULL,       "scratchpad",                 0,          1,           -1,       's' },
 	{ NULL,       NULL,       "Settings",                   0,          1,           -1},
+	{ NULL,       NULL,       "GTick 0.5.4",                0,          1,           -1},
+	{ NULL,       NULL,       "Base Converter",             0,          1,           -1},
 };
 
 /* layout(s) */
@@ -70,7 +72,7 @@ static const char *zoomcmd[]  = { "zoom", NULL };
 static const char *gcpcmd[]  = { "gcp", NULL };
 
 /*First arg only serves to match against key in rules*/
-static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", "-g", "100x30+100+100", "-f", "Monospace:14", "-e", "/bin/bash", "--init-file", "/home/regular/code/src/shell/scratch_init.sh", NULL};
+static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", "-g", "100x30+100+100", "-f", "Monospace:14", "-e", "/bin/bash", "--init-file", "/home/regular/Sync/code/src/shell/scratch_init.sh", NULL};
 
 static Key keys[] = {
 	/* modifier                     key            function        argument */
