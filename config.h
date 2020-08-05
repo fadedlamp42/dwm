@@ -68,6 +68,8 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  = { "st", NULL };
+static const char *suscmd[]  = { "systemctl", "suspend", NULL };
+static const char *offcmd[]  = { "systemctl", "poweroff", NULL };
 static const char *webcmd[]  = { "firefox", NULL };
 static const char *msgcmd[]  = { "discord", NULL };
 static const char *zoomcmd[]  = { "zoom", NULL };
@@ -93,7 +95,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_h,          setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,          setmfact,       {.f = +0.05} },
 	{ MODKEY|ShiftMask,             XK_Return,     zoom,           {0} },
-// { MODKEY,                       XK_Tab,        view,           {0} },
+    { MODKEY,                       XK_Tab,        view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,          killclient,     {0} },
 	{ MODKEY,                       XK_t,          setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,          setlayout,      {.v = &layouts[1]} },
@@ -107,12 +109,30 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period,     focusmon,       {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_comma,      tagmon,         {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_period,     tagmon,         {.i = -1 } },
-    { MODKEY,                       XK_Up,         spawn,          {.v = upvol   } },
-	{ MODKEY,                       XK_Down,       spawn,          {.v = downvol } },
+    { MODKEY,                       XK_KP_Up,      spawn,          {.v = upvol   } },
+	{ MODKEY,                       XK_KP_Down,    spawn,          {.v = downvol } },
 	{ MODKEY,                       XK_KP_Insert,  spawn,          {.v = mutevol } },
 	{ MODKEY,                       XK_minus,      setgaps,        {.i = -15 } },
 	{ MODKEY,                       XK_equal,      setgaps,        {.i = +15 } },
 	{ MODKEY|ShiftMask,             XK_equal,      setgaps,        {.i = 0  } },
+	{ MODKEY,                       XK_F12,        spawn,          {.v = suscmd } },
+	{ MODKEY|ShiftMask,             XK_F12,        spawn,          {.v = offcmd } },
+ 	{ MODKEY,                       XK_Down,       moveresize,     {.v = "0x 70y 0w 0h" } },
+ 	{ MODKEY,                       XK_Up,         moveresize,     {.v = "0x -70y 0w 0h" } },
+ 	{ MODKEY,                       XK_Right,      moveresize,     {.v = "70x 0y 0w 0h" } },
+ 	{ MODKEY,                       XK_Left,       moveresize,     {.v = "-70x 0y 0w 0h" } },
+ 	{ MODKEY|ShiftMask,             XK_Down,       moveresize,     {.v = "0x 0y 0w 70h" } },
+ 	{ MODKEY|ShiftMask,             XK_Up,         moveresize,     {.v = "0x 0y 0w -70h" } },
+ 	{ MODKEY|ShiftMask,             XK_Right,      moveresize,     {.v = "0x 0y 70w 0h" } },
+ 	{ MODKEY|ShiftMask,             XK_Left,       moveresize,     {.v = "0x 0y -70w 0h" } },
+ 	{ MODKEY|ControlMask,           XK_Up,         moveresizeedge, {.v = "t"} },
+ 	{ MODKEY|ControlMask,           XK_Down,       moveresizeedge, {.v = "b"} },
+ 	{ MODKEY|ControlMask,           XK_Left,       moveresizeedge, {.v = "l"} },
+ 	{ MODKEY|ControlMask,           XK_Right,      moveresizeedge, {.v = "r"} },
+ 	{ MODKEY|ControlMask|ShiftMask, XK_Up,         moveresizeedge, {.v = "T"} },
+ 	{ MODKEY|ControlMask|ShiftMask, XK_Down,       moveresizeedge, {.v = "B"} },
+ 	{ MODKEY|ControlMask|ShiftMask, XK_Left,       moveresizeedge, {.v = "L"} },
+ 	{ MODKEY|ControlMask|ShiftMask, XK_Right,      moveresizeedge, {.v = "R"} },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
