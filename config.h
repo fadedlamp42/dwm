@@ -6,7 +6,7 @@ static const unsigned int gappx     = 17;        /* gap pixel between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "monospace:size=10" };
+static const char *fonts[]          = { "Hack Nerd Font:size=10" };
 static const char dmenufont[]       = "monospace:size=10";
 static const char col_gray1[]       = "#222222";
 static const char col_gray2[]       = "#444444";
@@ -32,7 +32,6 @@ static const Rule rules[] = {
 	 */
 	/* class      instance    title                         tags mask   isfloating   monitor */
 	//{ "Gimp",     NULL,       NULL,                       0,          1,           -1 },
-	{ NULL,       NULL,       "Discord",                    1 << 3,     0,           -1 },
 	{ NULL,       NULL,       "scratchpad",                 0,          1,           -1,       's' },
 	{ NULL,       NULL,       "Settings",                   0,          1,           -1},
 	{ NULL,       NULL,       "GTick 0.5.4",                0,          1,           -1},
@@ -67,13 +66,19 @@ static const Layout layouts[] = {
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
-static const char *termcmd[]  = { "st", NULL };
-static const char *suscmd[]  = { "systemctl", "suspend", NULL };
-static const char *offcmd[]  = { "systemctl", "poweroff", NULL };
-static const char *webcmd[]  = { "firefox", NULL };
-static const char *msgcmd[]  = { "discord", NULL };
-static const char *zoomcmd[]  = { "zoom", NULL };
-static const char *gcpcmd[]  = { "gcp", NULL };
+static const char *termcmd[]  =   { "st", NULL };
+static const char *suscmd[]  =    { "systemctl", "suspend", NULL };
+static const char *offcmd[]  =    { "systemctl", "poweroff", NULL };
+static const char *rebootcmd[]  = { "systemctl", "reboot", NULL };
+static const char *webcmd[]  =    { "firefox", NULL };
+static const char *msgcmd[]  =    { "discord", NULL };
+static const char *zoomcmd[]  =   { "zoom", NULL };
+static const char *gimpcmd[]  =    { "gimp", NULL };
+static const char *scancmd[]  =   { "scan", NULL };
+static const char *vlccmd[]  =    { "vlc", NULL };
+static const char *slackcmd[]  =  { "slack", NULL };
+static const char *clemcmd[]  =  { "clementine", NULL };
+static const char *devhelpcmd[]  =  { "devhelp", NULL };
 
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", "-g", "100x30+100+100", "-f", "Monospace:14", "-e", "/bin/bash", "--init-file", "/home/regular/Sync/code/src/shell/scratch_init.sh", NULL};
@@ -85,7 +90,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_w,          spawn,          {.v = webcmd } },
 	{ MODKEY,                       XK_s,          spawn,          {.v = msgcmd } },
 	{ MODKEY,                       XK_z,          spawn,          {.v = zoomcmd } },
-	{ MODKEY,                       XK_g,          spawn,          {.v = gcpcmd } },
+	{ MODKEY,                       XK_g,          spawn,          {.v = gimpcmd } },
 	{ MODKEY,                       XK_grave,      togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY,                       XK_b,          togglebar,      {0} },
 	{ MODKEY,                       XK_j,          focusstack,     {.i = +1 } },
@@ -117,14 +122,20 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_equal,      setgaps,        {.i = 0  } },
 	{ MODKEY,                       XK_F12,        spawn,          {.v = suscmd } },
 	{ MODKEY|ShiftMask,             XK_F12,        spawn,          {.v = offcmd } },
- 	{ MODKEY,                       XK_Down,       moveresize,     {.v = "0x 70y 0w 0h" } },
- 	{ MODKEY,                       XK_Up,         moveresize,     {.v = "0x -70y 0w 0h" } },
- 	{ MODKEY,                       XK_Right,      moveresize,     {.v = "70x 0y 0w 0h" } },
- 	{ MODKEY,                       XK_Left,       moveresize,     {.v = "-70x 0y 0w 0h" } },
- 	{ MODKEY|ShiftMask,             XK_Down,       moveresize,     {.v = "0x 0y 0w 70h" } },
- 	{ MODKEY|ShiftMask,             XK_Up,         moveresize,     {.v = "0x 0y 0w -70h" } },
- 	{ MODKEY|ShiftMask,             XK_Right,      moveresize,     {.v = "0x 0y 70w 0h" } },
- 	{ MODKEY|ShiftMask,             XK_Left,       moveresize,     {.v = "0x 0y -70w 0h" } },
+	{ MODKEY,                       XK_F11,        spawn,          {.v = rebootcmd } },
+	{ MODKEY,                       XK_F5,         spawn,          {.v = scancmd } },
+	{ MODKEY,                       XK_v,          spawn,          {.v = vlccmd } },
+	{ MODKEY,                       XK_a,          spawn,          {.v = slackcmd } },
+	{ MODKEY,                       XK_c,          spawn,          {.v = clemcmd } },
+	{ MODKEY,                       XK_e,          spawn,          {.v = devhelpcmd } },
+ 	{ MODKEY,                       XK_Down,       moveresize,     {.v = "0x 150y 0w 0h" } },
+ 	{ MODKEY,                       XK_Up,         moveresize,     {.v = "0x -150y 0w 0h" } },
+ 	{ MODKEY,                       XK_Right,      moveresize,     {.v = "150x 0y 0w 0h" } },
+ 	{ MODKEY,                       XK_Left,       moveresize,     {.v = "-150x 0y 0w 0h" } },
+ 	{ MODKEY|ShiftMask,             XK_Down,       moveresize,     {.v = "0x 0y 0w 150h" } },
+ 	{ MODKEY|ShiftMask,             XK_Up,         moveresize,     {.v = "0x 0y 0w -150h" } },
+ 	{ MODKEY|ShiftMask,             XK_Right,      moveresize,     {.v = "0x 0y 150w 0h" } },
+ 	{ MODKEY|ShiftMask,             XK_Left,       moveresize,     {.v = "0x 0y -150w 0h" } },
  	{ MODKEY|ControlMask,           XK_Up,         moveresizeedge, {.v = "t"} },
  	{ MODKEY|ControlMask,           XK_Down,       moveresizeedge, {.v = "b"} },
  	{ MODKEY|ControlMask,           XK_Left,       moveresizeedge, {.v = "l"} },
