@@ -1930,9 +1930,6 @@ togglescratch(const Arg *arg)
 
 	} else{
 		spawnscratch(arg);
-        Arg a;
-        a.v = "300x 300y 0w 0h";
-        moveresize(&a);
 	}
 }
 
