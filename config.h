@@ -4,6 +4,10 @@
 static const unsigned int borderpx  = 6;        /* border pixel of windows */
 static const unsigned int gappx     = 17;        /* gap pixel between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
+static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
+static const unsigned int systrayspacing = 2;   /* systray spacing */
+static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
+static const int showsystray        = 1;     /* 0 means no systray */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
 static const char *fonts[]          = { "Hack Nerd Font:size=10" };
@@ -87,10 +91,10 @@ static Key keys[] = {
 	/* modifier                     key            function        argument */
 	{ MODKEY,                       XK_r,          spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return,     spawn,          {.v = termcmd } },
-	{ MODKEY,                       XK_w,          spawn,          {.v = webcmd } },
-	{ MODKEY,                       XK_s,          spawn,          {.v = msgcmd } },
-	{ MODKEY,                       XK_z,          spawn,          {.v = zoomcmd } },
-	{ MODKEY,                       XK_g,          spawn,          {.v = gimpcmd } },
+	{ MODKEY,                       XK_w,          spawn_notify,   {.v = webcmd } },
+	{ MODKEY,                       XK_s,          spawn_notify,   {.v = msgcmd } },
+	{ MODKEY,                       XK_z,          spawn_notify,   {.v = zoomcmd } },
+	{ MODKEY,                       XK_g,          spawn_notify,   {.v = gimpcmd } },
 	{ MODKEY,                       XK_grave,      togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY,                       XK_b,          togglebar,      {0} },
 	{ MODKEY,                       XK_j,          focusstack,     {.i = +1 } },
@@ -124,10 +128,10 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_F12,        spawn,          {.v = offcmd } },
 	{ MODKEY,                       XK_F11,        spawn,          {.v = rebootcmd } },
 	{ MODKEY,                       XK_F5,         spawn,          {.v = scancmd } },
-	{ MODKEY,                       XK_v,          spawn,          {.v = vlccmd } },
-	{ MODKEY,                       XK_a,          spawn,          {.v = slackcmd } },
-	{ MODKEY,                       XK_c,          spawn,          {.v = clemcmd } },
-	{ MODKEY,                       XK_e,          spawn,          {.v = devhelpcmd } },
+	{ MODKEY,                       XK_v,          spawn_notify,   {.v = vlccmd } },
+	{ MODKEY,                       XK_a,          spawn_notify,   {.v = slackcmd } },
+	{ MODKEY,                       XK_c,          spawn_notify,   {.v = clemcmd } },
+	{ MODKEY,                       XK_e,          spawn_notify,   {.v = devhelpcmd } },
  	{ MODKEY,                       XK_Down,       moveresize,     {.v = "0x 150y 0w 0h" } },
  	{ MODKEY,                       XK_Up,         moveresize,     {.v = "0x -150y 0w 0h" } },
  	{ MODKEY,                       XK_Right,      moveresize,     {.v = "150x 0y 0w 0h" } },
