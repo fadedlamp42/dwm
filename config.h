@@ -83,6 +83,7 @@ static const char *vlccmd[]  =    { "vlc", NULL };
 static const char *slackcmd[]  =  { "slack", NULL };
 static const char *clemcmd[]  =  { "clementine", NULL };
 static const char *devhelpcmd[]  =  { "devhelp", NULL };
+static const char *translatecmd[]  =  { "google-translate", NULL };
 
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", "-g", "100x30+100+100", "-f", "Monospace:14", "-e", "/bin/bash", "--init-file", "/home/regular/Sync/code/src/shell/scratch_init.sh", NULL};
@@ -132,6 +133,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_a,          spawn_notify,   {.v = slackcmd } },
 	{ MODKEY,                       XK_c,          spawn_notify,   {.v = clemcmd } },
 	{ MODKEY,                       XK_e,          spawn_notify,   {.v = devhelpcmd } },
+	{ MODKEY,                       XK_n,          spawn_notify,   {.v = translatecmd } },
  	{ MODKEY,                       XK_Down,       moveresize,     {.v = "0x 150y 0w 0h" } },
  	{ MODKEY,                       XK_Up,         moveresize,     {.v = "0x -150y 0w 0h" } },
  	{ MODKEY,                       XK_Right,      moveresize,     {.v = "150x 0y 0w 0h" } },
