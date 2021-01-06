@@ -64,6 +64,12 @@ static const Layout layouts[] = {
 	{ MODKEY|ShiftMask,             KEY,      tag,            {.ui = 1 << TAG} }, \
 	{ MODKEY|ControlMask|ShiftMask, KEY,      toggletag,      {.ui = 1 << TAG} },
 
+/* additional mouse button definitions */
+#define Button6 6
+#define Button7 7
+#define Button8 8
+#define Button9 9
+
 /* helper for spawning shell commands in the pre dwm-5.0 fashion */
 #define SHCMD(cmd) { .v = (const char*[]){ "/bin/sh", "-c", cmd, NULL } }
 
@@ -81,10 +87,11 @@ static const char *gimpcmd[]  =    { "gimp", NULL };
 static const char *scancmd[]  =   { "scan", NULL };
 static const char *vlccmd[]  =    { "vlc", NULL };
 static const char *slackcmd[]  =  { "slack", NULL };
-static const char *clemcmd[]  =  { "clementine", NULL };
+static const char *spotifycmd[] = {"spotify", NULL};
 static const char *devhelpcmd[]  =  { "devhelp", NULL };
 static const char *translatecmd[]  =  { "google-translate", NULL };
 static const char *messengercmd[]  =  { "caprine", NULL };
+static const char *playpausecmd[]  =  { "playerctl", "play-pause", NULL };
 
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", "-g", "100x30+100+100", "-f", "Monospace:14", "-e", "/bin/bash", "--init-file", "/home/regular/Sync/code/src/shell/scratch_init.sh", NULL};
@@ -120,9 +127,6 @@ static Key keys[] = {
 	{ MODKEY,                       XK_period,     focusmon,       {.i = -1 } },
 	{ MODKEY|ShiftMask,             XK_comma,      tagmon,         {.i = +1 } },
 	{ MODKEY|ShiftMask,             XK_period,     tagmon,         {.i = -1 } },
-    { MODKEY,                       XK_KP_Up,      spawn,          {.v = upvol   } },
-	{ MODKEY,                       XK_KP_Down,    spawn,          {.v = downvol } },
-	{ MODKEY,                       XK_KP_Insert,  spawn,          {.v = mutevol } },
 	{ MODKEY,                       XK_minus,      setgaps,        {.i = -15 } },
 	{ MODKEY,                       XK_equal,      setgaps,        {.i = +15 } },
 	{ MODKEY|ShiftMask,             XK_equal,      setgaps,        {.i = 0  } },
@@ -132,7 +136,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_F5,         spawn,          {.v = scancmd } },
 	{ MODKEY,                       XK_v,          spawn_notify,   {.v = vlccmd } },
 	{ MODKEY,                       XK_a,          spawn_notify,   {.v = slackcmd } },
-	{ MODKEY,                       XK_c,          spawn_notify,   {.v = clemcmd } },
+	{ MODKEY,                       XK_c,          spawn_notify,   {.v = spotifycmd } },
 	{ MODKEY,                       XK_e,          spawn_notify,   {.v = devhelpcmd } },
 	{ MODKEY,                       XK_n,          spawn_notify,   {.v = translatecmd } },
 	{ MODKEY,                       XK_p,          spawn_notify,   {.v = messengercmd } },
@@ -179,5 +183,13 @@ static Button buttons[] = {
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
+    { ClkRootWin,           MODKEY,         Button4,        spawn,          {.v = upvol   } },
+	{ ClkRootWin,           MODKEY,         Button5,        spawn,          {.v = downvol } },
+	{ ClkRootWin,           MODKEY,         Button8,        spawn,          {.v = mutevol } },
+	{ ClkRootWin,           MODKEY,         Button9,        spawn_notify,   {.v = playpausecmd } },
+    { ClkClientWin,         MODKEY,         Button4,        spawn,          {.v = upvol   } },
+	{ ClkClientWin,         MODKEY,         Button5,        spawn,          {.v = downvol } },
+	{ ClkClientWin,         MODKEY,         Button8,        spawn,          {.v = mutevol } },
+	{ ClkClientWin,         MODKEY,         Button9,        spawn_notify,   {.v = playpausecmd } },
 };
 
