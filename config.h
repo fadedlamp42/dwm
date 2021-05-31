@@ -86,12 +86,16 @@ static const char *zoomcmd[]  =   { "zoom", NULL };
 static const char *gimpcmd[]  =    { "gimp", NULL };
 static const char *scancmd[]  =   { "scan", NULL };
 static const char *vlccmd[]  =    { "vlc", NULL };
-static const char *slackcmd[]  =  { "slack", NULL };
+static const char *rsscmd[]  =  { "rssguard", NULL };
 static const char *spotifycmd[] = {"spotify", NULL};
 static const char *devhelpcmd[]  =  { "devhelp", NULL };
 static const char *translatecmd[]  =  { "google-translate", NULL };
 static const char *messengercmd[]  =  { "caprine", NULL };
 static const char *playpausecmd[]  =  { "playerctl", "play-pause", NULL };
+static const char *monitor1cmd[]  =  { "mousemove.sh", "1", NULL };
+static const char *monitor2cmd[]  =  { "mousemove.sh", "2", NULL };
+static const char *monitor3cmd[]  =  { "mousemove.sh", "3", NULL };
+
 
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", "-g", "100x30+100+100", "-f", "Monospace:14", "-e", "/bin/bash", "--init-file", "/home/regular/Sync/code/src/shell/scratch_init.sh", NULL};
@@ -123,10 +127,10 @@ static Key keys[] = {
 	{ MODKEY|ShiftMask,             XK_space,      togglefloating, {0} },
 	{ MODKEY,                       XK_0,          view,           {.ui = ~0 } },
 	{ MODKEY|ShiftMask,             XK_0,          tag,            {.ui = ~0 } },
-	{ MODKEY,                       XK_comma,      focusmon,       {.i = +1 } },
-	{ MODKEY,                       XK_period,     focusmon,       {.i = -1 } },
-	{ MODKEY|ShiftMask,             XK_comma,      tagmon,         {.i = +1 } },
-	{ MODKEY|ShiftMask,             XK_period,     tagmon,         {.i = -1 } },
+	{ MODKEY,                       XK_comma,      focusmon,       {.i = -1 } },
+	{ MODKEY,                       XK_period,     focusmon,       {.i = +1 } },
+	{ MODKEY|ShiftMask,             XK_comma,      tagmon,         {.i = -1 } },
+	{ MODKEY|ShiftMask,             XK_period,     tagmon,         {.i = +1 } },
 	{ MODKEY,                       XK_minus,      setgaps,        {.i = -15 } },
 	{ MODKEY,                       XK_equal,      setgaps,        {.i = +15 } },
 	{ MODKEY|ShiftMask,             XK_equal,      setgaps,        {.i = 0  } },
@@ -135,7 +139,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_F11,        spawn,          {.v = rebootcmd } },
 	{ MODKEY,                       XK_F5,         spawn,          {.v = scancmd } },
 	{ MODKEY,                       XK_v,          spawn_notify,   {.v = vlccmd } },
-	{ MODKEY,                       XK_a,          spawn_notify,   {.v = slackcmd } },
+	{ MODKEY,                       XK_a,          spawn_notify,   {.v = rsscmd } },
 	{ MODKEY,                       XK_c,          spawn_notify,   {.v = spotifycmd } },
 	{ MODKEY,                       XK_e,          spawn_notify,   {.v = devhelpcmd } },
 	{ MODKEY,                       XK_n,          spawn_notify,   {.v = translatecmd } },
@@ -156,6 +160,9 @@ static Key keys[] = {
  	{ MODKEY|ControlMask|ShiftMask, XK_Down,       moveresizeedge, {.v = "B"} },
  	{ MODKEY|ControlMask|ShiftMask, XK_Left,       moveresizeedge, {.v = "L"} },
  	{ MODKEY|ControlMask|ShiftMask, XK_Right,      moveresizeedge, {.v = "R"} },
+	{ LockMask,                     XK_1,          spawn,          {.v = monitor1cmd } },
+	{ LockMask,                     XK_2,          spawn,          {.v = monitor2cmd } },
+	{ LockMask,                     XK_3,          spawn,          {.v = monitor3cmd } },
 	TAGKEYS(                        XK_1,                      0)
 	TAGKEYS(                        XK_2,                      1)
 	TAGKEYS(                        XK_3,                      2)
