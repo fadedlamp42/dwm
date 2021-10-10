@@ -2,8 +2,8 @@
 
 /* appearance */
 static const unsigned int borderpx  = 6;        /* border pixel of windows */
-static const unsigned int gappx     = 30;        /* gap pixel between windows */
-static const unsigned int snap      = 32;       /* snap pixel */
+static const unsigned int gappx     = 20;        /* gap pixel between windows */
+static const unsigned int snap      = 10;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
@@ -101,7 +101,7 @@ static const char *xkillcmd[]  =  { "xkill", NULL };
 
 
 /*First arg only serves to match against key in rules*/
-static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", "-g", "100x30+100+100", "-f", "Monospace:14", "-e", "/bin/bash", "--init-file", "/home/regular/.bashrc_scratch", NULL};
+static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", "-g", "100x30+200+100", "-f", "Monospace:14", "-e", "/bin/bash", "--init-file", "/home/regular/.bashrc_scratch", NULL};
 
 static Key keys[] = {
 	/* modifier                     key            function        argument */
