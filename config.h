@@ -2,7 +2,7 @@
 
 /* appearance */
 static const unsigned int borderpx  = 6;        /* border pixel of windows */
-static const unsigned int gappx     = 50;        /* gap pixel between windows */
+static const unsigned int gappx     = 30;        /* gap pixel between windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
@@ -92,15 +92,16 @@ static const char *rsscmd[]  =  { "rssguard", NULL };
 static const char *spotifycmd[] = {"spotify", NULL};
 static const char *devhelpcmd[]  =  { "devhelp", NULL };
 static const char *translatecmd[]  =  { "google-translate", NULL };
-static const char *messengercmd[]  =  { "caprine", NULL };
+static const char *postmancmd[]  =  { "postman", NULL };
 static const char *playpausecmd[]  =  { "playerctl", "play-pause", NULL };
 static const char *monitor1cmd[]  =  { "mousemove.sh", "1", NULL };
 static const char *monitor2cmd[]  =  { "mousemove.sh", "2", NULL };
 static const char *monitor3cmd[]  =  { "mousemove.sh", "3", NULL };
+static const char *xkillcmd[]  =  { "xkill", NULL };
 
 
 /*First arg only serves to match against key in rules*/
-static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", "-g", "100x30+100+100", "-f", "Monospace:14", "-e", "/bin/bash", "--init-file", "/home/regular/Sync/code/src/shell/scratch_init.sh", NULL};
+static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", "-g", "100x30+100+100", "-f", "Monospace:14", "-e", "/bin/bash", "--init-file", "/home/regular/.bashrc_scratch", NULL};
 
 static Key keys[] = {
 	/* modifier                     key            function        argument */
@@ -119,7 +120,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_h,          setmfact,       {.f = -0.05} },
 	{ MODKEY,                       XK_l,          setmfact,       {.f = +0.05} },
 	{ MODKEY|ShiftMask,             XK_Return,     zoom,           {0} },
-    { MODKEY,                       XK_Tab,        view,           {0} },
+  { MODKEY,                       XK_Tab,        view,           {0} },
 	{ MODKEY|ShiftMask,             XK_c,          killclient,     {0} },
 	{ MODKEY,                       XK_t,          setlayout,      {.v = &layouts[0]} },
 	{ MODKEY,                       XK_f,          setlayout,      {.v = &layouts[1]} },
@@ -145,7 +146,11 @@ static Key keys[] = {
 	{ MODKEY,                       XK_c,          spawn_notify,   {.v = spotifycmd } },
 	{ MODKEY,                       XK_e,          spawn_notify,   {.v = devhelpcmd } },
 	{ MODKEY,                       XK_n,          spawn_notify,   {.v = translatecmd } },
-	{ MODKEY,                       XK_p,          spawn_notify,   {.v = messengercmd } },
+	{ MODKEY,                       XK_p,          spawn_notify,   {.v = postmancmd } },
+	{ MODKEY,                       XK_x,          spawn_notify,   {.v = xkillcmd } },
+	{ MODKEY,                       XK_KP_Add,     spawn_notify,   {.v = upvol } },
+	{ MODKEY,                       XK_KP_Subtract,spawn_notify,   {.v = downvol } },
+	{ MODKEY,                       XK_KP_Multiply,spawn_notify,   {.v = mutevol } },
  	{ MODKEY,                       XK_Down,       moveresize,     {.v = "0x 150y 0w 0h" } },
  	{ MODKEY,                       XK_Up,         moveresize,     {.v = "0x -150y 0w 0h" } },
  	{ MODKEY,                       XK_Right,      moveresize,     {.v = "150x 0y 0w 0h" } },
@@ -192,11 +197,11 @@ static Button buttons[] = {
 	{ ClkTagBar,            0,              Button3,        toggleview,     {0} },
 	{ ClkTagBar,            MODKEY,         Button1,        tag,            {0} },
 	{ ClkTagBar,            MODKEY,         Button3,        toggletag,      {0} },
-    { ClkRootWin,           MODKEY,         Button4,        spawn,          {.v = upvol   } },
+  { ClkRootWin,           MODKEY,         Button4,        spawn,          {.v = upvol   } },
 	{ ClkRootWin,           MODKEY,         Button5,        spawn,          {.v = downvol } },
 	{ ClkRootWin,           MODKEY,         Button8,        spawn,          {.v = mutevol } },
 	{ ClkRootWin,           MODKEY,         Button9,        spawn_notify,   {.v = playpausecmd } },
-    { ClkClientWin,         MODKEY,         Button4,        spawn,          {.v = upvol   } },
+  { ClkClientWin,         MODKEY,         Button4,        spawn,          {.v = upvol   } },
 	{ ClkClientWin,         MODKEY,         Button5,        spawn,          {.v = downvol } },
 	{ ClkClientWin,         MODKEY,         Button8,        spawn,          {.v = mutevol } },
 	{ ClkClientWin,         MODKEY,         Button9,        spawn_notify,   {.v = playpausecmd } },
