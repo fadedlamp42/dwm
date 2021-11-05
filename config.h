@@ -98,6 +98,7 @@ static const char *monitor1cmd[]  =  { "mousemove.sh", "1", NULL };
 static const char *monitor2cmd[]  =  { "mousemove.sh", "2", NULL };
 static const char *monitor3cmd[]  =  { "mousemove.sh", "3", NULL };
 static const char *xkillcmd[]  =  { "xkill", NULL };
+static const char *screenshotcmd[]  =  { "deepin-screenshot", NULL };
 
 
 /*First arg only serves to match against key in rules*/
@@ -148,6 +149,7 @@ static Key keys[] = {
 	{ MODKEY,                       XK_n,          spawn_notify,   {.v = translatecmd } },
 	{ MODKEY,                       XK_p,          spawn_notify,   {.v = postmancmd } },
 	{ MODKEY,                       XK_x,          spawn_notify,   {.v = xkillcmd } },
+	{ MODKEY,                       XK_Print,      spawn_notify,   {.v = screenshotcmd } },
 	{ MODKEY,                       XK_KP_Add,     spawn_notify,   {.v = upvol } },
 	{ MODKEY,                       XK_KP_Subtract,spawn_notify,   {.v = downvol } },
 	{ MODKEY,                       XK_KP_Multiply,spawn_notify,   {.v = mutevol } },
