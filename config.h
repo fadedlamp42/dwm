@@ -4,7 +4,7 @@
 static const unsigned int borderpx  = 6;        /* border pixel of windows */
 static const unsigned int gappx     = 20;        /* gap pixel between windows */
 static const unsigned int snap      = 10;       /* snap pixel */
-static const unsigned int systraypinning = 0;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
+static const unsigned int systraypinning = 1;   /* 0: sloppy systray follows selected monitor, >0: pin systray to monitor X */
 static const unsigned int systrayspacing = 2;   /* systray spacing */
 static const int systraypinningfailfirst = 1;   /* 1: if pinning fails, display systray on the first monitor, False: display systray on the last monitor*/
 static const int showsystray        = 1;     /* 0 means no systray */
@@ -31,18 +31,45 @@ static const char *mutevol[] = { "amixer", "set", "Master", "toggle", NULL };
 /* tagging */
 static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
+/* monitor positioning definitions */
+#define MON_ANY -1
+#define MON_LEFT 2
+#define MON_MID 0
+#define MON_RIGHT 1
+
+#define TAG_1 1
+#define TAG_2 2
+#define TAG_3 4
+#define TAG_4 8
+#define TAG_5 16
+#define TAG_6 32
+#define TAG_7 64
+#define TAG_8 128
+#define TAG_9 256
+
 static const Rule rules[] = {
 	/* xprop(1):
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance    title                         tags mask   isfloating   monitor */
-	//{ "Gimp",     NULL,       NULL,                       0,          1,           -1 },
-	{ NULL,       NULL,       "scratchpad",                 0,          1,           -1,       's' },
-	{ NULL,       NULL,       "Settings",                   0,          1,           -1},
-	{ NULL,       NULL,       "GTick 0.5.4",                0,          1,           -1},
-	{ NULL,       NULL,       "Base Converter",             0,          1,           -1},
+	/* class      instance    title (strstr)                tags mask   isfloating   monitor	 scratch */
+	{ NULL,       NULL,       "scratchpad",                 0,          1,           MON_ANY,       's' },
+	{ NULL,       NULL,       "Settings",                   0,          1,           MON_ANY},
+	{ NULL,       NULL,       "Base Converter",             0,          1,           MON_ANY},
+
+	{ NULL,       NULL,       "broken", /* Spotify */       TAG_1,      0,           MON_LEFT},
+	{ NULL,       NULL,       "Slack",             				  TAG_2,      0,           MON_LEFT},
+	{ NULL,       NULL,       "Discord",             				TAG_4,      0,           MON_LEFT},
+	{ NULL,       NULL,       "RSS",             						TAG_7,      0,           MON_MID},
+	{ NULL,       NULL,       "another-redis",             	TAG_8,      0,           MON_MID},
+	{ NULL,       NULL,       "AWS VPN",             				TAG_8,      0,           MON_MID},
+	{ NULL,       NULL,       "beekeeper",             			TAG_9,      0,           MON_MID},
+	{ NULL,       NULL,       "Postman",             				TAG_2,      0,           MON_RIGHT},
+	{ NULL,       NULL,       "Whale",             					TAG_4,      0,           MON_RIGHT},
+	{ NULL,       NULL,       "Google Chrome",             	TAG_9,      0,           MON_RIGHT},
+	{ NULL,       NULL,       "Zoom",             					TAG_7,      0,           MON_RIGHT},
 };
+
 
 #include "horizgrid.c"
 /* layout(s) */
@@ -93,7 +120,8 @@ static const char *scancmd[]  =   { "scan", NULL };
 static const char *screenshotcmd[]  =  { "deepin-screenshot", NULL };
 static const char *slackcmd[]  =  { "slack", NULL };
 static const char *spotifycmd[] = {"spotify", NULL};
-static const char *translatecmd[]  =  { "google-translate", NULL };
+static const char *translatecmd[]  =  { "tagainijisho", NULL };
+static const char *sqlcmd[]  =  { "beekeeper", NULL };
 static const char *vlccmd[]  =    { "vlc", NULL };
 static const char *webcmd[]  =    { "firefox", NULL };
 static const char *whalecmd[]  =  { "whale", NULL };
@@ -103,6 +131,20 @@ static const char *zoomcmd[]  =   { "zoom", NULL };
 
 /*First arg only serves to match against key in rules*/
 static const char *scratchpadcmd[] = {"s", "st", "-t", "scratchpad", "-g", "100x30+200+100", "-f", "Monospace:14", "-e", "/bin/bash", "--init-file", "/home/regular/.bashrc_scratch", NULL};
+
+/* M80 keymappings */
+// F1: 0x1008ff03
+// F2: 0x1008ff02
+// F3: 0x1008ff4a
+// F4: 0x1008ff4b
+// F5: 0x1008ff06
+// F6: 0x1008ff05
+// F7: 0x1008ff16
+// F8: 0x1008ff14
+// F9: 0x1008ff17
+// F10: 0x1008ff12
+// F11: 0x1008ff11
+// F12: 0x1008ff13
 
 static Key keys[] = {
 	/* modifier                     key            function        argument */
@@ -139,9 +181,17 @@ static Key keys[] = {
 	{ MODKEY,                       XK_equal,      setgaps,        {.i = +15 } },
 	{ MODKEY|ShiftMask,             XK_equal,      setgaps,        {.i = 0  } },
 	{ MODKEY,                       XK_F12,        spawn,          {.v = suscmd } },
+	{ MODKEY,                       XK_Delete,     spawn,          {.v = suscmd } },
+	{ MODKEY,                       0x1008ff13,    spawn,          {.v = suscmd } },
 	{ MODKEY|ShiftMask,             XK_F12,        spawn,          {.v = offcmd } },
+	{ MODKEY|ShiftMask,             XK_Delete,     spawn,          {.v = offcmd } },
+	{ MODKEY|ShiftMask,             0x1008ff13,    spawn,          {.v = offcmd } },
 	{ MODKEY,                       XK_F11,        spawn,          {.v = rebootcmd } },
+	{ MODKEY,                       XK_Prior,      spawn,          {.v = rebootcmd } },
+	{ MODKEY,                       0x1008ff11,    spawn,          {.v = rebootcmd } },
 	{ MODKEY,                       XK_F5,         spawn,          {.v = scancmd } },
+	{ MODKEY,                       0x1008ff06,    spawn,          {.v = scancmd } },
+	{ MODKEY,                       XK_q,          spawn_notify,   {.v = sqlcmd } },
 	{ MODKEY,                       XK_v,          spawn_notify,   {.v = vlccmd } },
 	{ MODKEY,                       XK_a,          spawn_notify,   {.v = slackcmd } },
 	{ MODKEY,                       XK_c,          spawn_notify,   {.v = spotifycmd } },
