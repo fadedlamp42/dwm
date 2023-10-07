@@ -33,9 +33,9 @@ static const char *tags[] = { "1", "2", "3", "4", "5", "6", "7", "8", "9" };
 
 /* monitor positioning definitions */
 #define MON_ANY -1
-#define MON_LEFT 2
-#define MON_MID 0
-#define MON_RIGHT 1
+#define MON_LEFT 1
+#define MON_MID 2
+#define MON_RIGHT 0
 
 #define TAG_1 1
 #define TAG_2 2
@@ -66,7 +66,7 @@ static const Rule rules[] = {
 	{ NULL,       NULL,       "beekeeper",             			TAG_9,      0,           MON_MID},
 	{ NULL,       NULL,       "Postman",             				TAG_2,      0,           MON_RIGHT},
 	{ NULL,       NULL,       "Whale",             					TAG_4,      0,           MON_RIGHT},
-	{ NULL,       NULL,       "Google Chrome",             	TAG_9,      0,           MON_RIGHT},
+	//{ NULL,       NULL,       "Google Chrome",             	TAG_2,      0,           MON_MID},
 	{ NULL,       NULL,       "Zoom",             					TAG_7,      0,           MON_RIGHT},
 };
 
@@ -106,6 +106,7 @@ static const Layout layouts[] = {
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", col_gray1, "-nf", col_gray3, "-sb", col_cyan, "-sf", col_gray4, NULL };
 static const char *termcmd[]  =   { "st", NULL };
+static const char *filecmd[]  =   { "nautilus", NULL };
 static const char *suscmd[]  =    { "systemctl", "suspend", NULL };
 static const char *offcmd[]  =    { "systemctl", "poweroff", NULL };
 static const char *rebootcmd[]  = { "systemctl", "reboot", NULL };
@@ -117,16 +118,19 @@ static const char *gimpcmd[]  =    { "gimp", NULL };
 static const char *msgcmd[]  =    { "discord", NULL };
 static const char *postmancmd[]  =  { "postman", NULL };
 static const char *scancmd[]  =   { "scan", NULL };
-static const char *screenshotcmd[]  =  { "deepin-screenshot", NULL };
+static const char *screenshotcmd[]  =  { "/usr/bin/flameshot", "gui", NULL };
 static const char *slackcmd[]  =  { "slack", NULL };
 static const char *spotifycmd[] = {"spotify", NULL};
-static const char *translatecmd[]  =  { "google-translate", NULL };
+static const char *translatecmd[]  =  { "google-chrome", "https://translate.google.com", NULL };
 static const char *sqlcmd[]  =  { "beekeeper", NULL };
 static const char *vlccmd[]  =    { "vlc", NULL };
 static const char *webcmd[]  =    { "firefox-esr", NULL };
+static const char *jupytercmd[]  =    { "jupyter-lab", NULL };
 static const char *whalecmd[]  =  { "whale", NULL };
 static const char *xkillcmd[]  =  { "xkill", NULL };
 static const char *zoomcmd[]  =   { "zoom", NULL };
+static const char *dictionstartcmd[]  =   { "nerd-dictation", "begin", "--vosk-model-dir=/Sync/LINUX/packages/nerd-dictation/model/", NULL };
+static const char *dictionendcmd[]  =   { "nerd-dictation", "end", NULL };
 
 
 /*First arg only serves to match against key in rules*/
@@ -150,12 +154,16 @@ static Key keys[] = {
 	/* modifier                     key            function        argument */
 	{ MODKEY,                       XK_r,          spawn,          {.v = dmenucmd } },
 	{ MODKEY,                       XK_Return,     spawn,          {.v = termcmd } },
+	{ MODKEY|ShiftMask,             XK_n,          spawn,          {.v = filecmd } },
 	{ MODKEY,                       XK_w,          spawn_notify,   {.v = webcmd } },
+	{ MODKEY,                       XK_y,          spawn_notify,   {.v = jupytercmd } },
 	{ MODKEY,                       XK_s,          spawn_notify,   {.v = msgcmd } },
 	{ MODKEY,                       XK_z,          spawn_notify,   {.v = zoomcmd } },
 	{ MODKEY,                       XK_g,          spawn_notify,   {.v = gimpcmd } },
 	{ MODKEY,                       XK_grave,      togglescratch,  {.v = scratchpadcmd } },
 	{ MODKEY,                       XK_b,          togglebar,      {0} },
+	{ MODKEY,                       XK_apostrophe, spawn,          {.v = dictionstartcmd} },
+	{ MODKEY|ShiftMask,             XK_apostrophe, spawn,          {.v = dictionendcmd} },
 	{ MODKEY,                       XK_j,          focusstack,     {.i = +1 } },
 	{ MODKEY,                       XK_k,          focusstack,     {.i = -1 } },
 	{ MODKEY,                       XK_i,          incnmaster,     {.i = +1 } },
